@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake News Detection System - Integrated Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <h1>🛡️ FakeNews Detector Pro</h1>
+                        <p>Advanced AI-Powered News Verification System</p>
+                    </div>
+                    <div class="status-indicator">
+                        <div class="status status--success">System Online</div>
+                        <div class="system-info">
+                            <span>Processing Speed: &lt; 200ms</span>
+                            <span>Uptime: 99.9%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs">
+            <div class="container">
+                <div class="tab-list">
+                    <button class="tab-button active" data-tab="dashboard">Dashboard</button>
+                    <button class="tab-button" data-tab="live-news">Live News</button>
+                    <button class="tab-button" data-tab="manual-analysis">Manual Analysis</button>
+                    <button class="tab-button" data-tab="analytics">Analytics</button>
+                    <button class="tab-button" data-tab="model-performance">Model Performance</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="container">
+                <!-- Dashboard Tab -->
+                <div id="dashboard" class="tab-content active">
+                    <div class="dashboard-grid">
+                        <!-- Metrics Cards -->
+                        <div class="metrics-section">
+                            <div class="metrics-grid">
+                                <div class="metric-card">
+                                    <div class="metric-icon">📊</div>
+                                    <div class="metric-info">
+                                        <h3>Total Analyzed</h3>
+                                        <span class="metric-value" id="totalAnalyzed">15,847</span>
+                                    </div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-icon">✅</div>
+                                    <div class="metric-info">
+                                        <h3>Real News</h3>
+                                        <span class="metric-value" id="realDetected">11,923</span>
+                                    </div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-icon">❌</div>
+                                    <div class="metric-info">
+                                        <h3>Fake Detected</h3>
+                                        <span class="metric-value" id="fakeDetected">3,924</span>
+                                    </div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-icon">🎯</div>
+                                    <div class="metric-info">
+                                        <h3>Accuracy</h3>
+                                        <span class="metric-value" id="accuracy">94.3%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Trend Chart -->
+                        <div class="chart-section">
+                            <div class="card">
+                                <div class="card__header">
+                                    <h3>Detection Trends (Last 7 Days)</h3>
+                                </div>
+                                <div class="card__body">
+                                    <div class="chart-container" style="position: relative; height: 300px;">
+                                        <canvas id="trendChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Live Feed Preview -->
+                        <div class="live-feed-section">
+                            <div class="card">
+                                <div class="card__header">
+                                    <h3>Recent Analysis Results</h3>
+                                </div>
+                                <div class="card__body">
+                                    <div id="recentResults" class="results-list">
+                                        <!-- Recent results will be populated here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live News Tab -->
+                <div id="live-news" class="tab-content">
+                    <div class="live-news-header">
+                        <h2>Live News Analysis</h2>
+                        <p>Fetch and analyze news from various sources in real-time</p>
+                    </div>
+                    
+                    <div class="news-source-buttons">
+                        <button class="btn btn--primary" id="fetchKarnataka">
+                            🏛️ Karnataka News
+                        </button>
+                        <button class="btn btn--primary" id="fetchIndia">
+                            🇮🇳 India News
+                        </button>
+                        <button class="btn btn--primary" id="fetchInternational">
+                            🌍 International News
+                        </button>
+                    </div>
+
+                    <div id="newsResults" class="news-results">
+                        <!-- News results will be populated here -->
+                    </div>
+
+                    <div id="loadingSpinner" class="loading-spinner hidden">
+                        <div class="spinner"></div>
+                        <p>Fetching and analyzing news articles...</p>
+                    </div>
+                </div>
+
+                <!-- Manual Analysis Tab -->
+                <div id="manual-analysis" class="tab-content">
+                    <div class="manual-analysis-section">
+                        <h2>Manual Article Analysis</h2>
+                        <p>Enter news article text for custom analysis</p>
+                        
+                        <div class="analysis-form">
+                            <div class="form-group">
+                                <label class="form-label" for="articleTitle">Article Title</label>
+                                <input type="text" id="articleTitle" class="form-control" placeholder="Enter article title...">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="articleContent">Article Content</label>
+                                <textarea id="articleContent" class="form-control" rows="8" placeholder="Paste article content here..."></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="articleSource">Source (Optional)</label>
+                                <input type="text" id="articleSource" class="form-control" placeholder="Enter news source...">
+                            </div>
+                            
+                            <button class="btn btn--primary btn--lg" id="analyzeManual">
+                                🔍 Analyze Article
+                            </button>
+                        </div>
+
+                        <div id="manualResults" class="manual-results hidden">
+                            <!-- Manual analysis results will appear here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analytics Tab -->
+                <div id="analytics" class="tab-content">
+                    <div class="analytics-header">
+                        <h2>Comprehensive Analytics</h2>
+                        <div class="export-options">
+                            <button class="btn btn--outline" id="exportData">📊 Export Analytics</button>
+                        </div>
+                    </div>
+                    
+                    <div class="analytics-grid">
+                        <!-- Category Distribution Chart -->
+                        <div class="card">
+                            <div class="card__header">
+                                <h3>Fake News by Category</h3>
+                            </div>
+                            <div class="card__body">
+                                <div class="chart-container" style="position: relative; height: 300px;">
+                                    <canvas id="categoryChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Regional Distribution Chart -->
+                        <div class="card">
+                            <div class="card__header">
+                                <h3>Regional Distribution</h3>
+                            </div>
+                            <div class="card__body">
+                                <div class="chart-container" style="position: relative; height: 300px;">
+                                    <canvas id="regionChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Detection Timeline -->
+                        <div class="card full-width">
+                            <div class="card__header">
+                                <h3>Detection Timeline</h3>
+                            </div>
+                            <div class="card__body">
+                                <div class="chart-container" style="position: relative; height: 400px;">
+                                    <canvas id="timelineChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Model Performance Tab -->
+                <div id="model-performance" class="tab-content">
+                    <div class="performance-header">
+                        <h2>Model Performance Metrics</h2>
+                        <p>Compare different ML models used for fake news detection</p>
+                    </div>
+                    
+                    <div class="performance-grid">
+                        <!-- Model Comparison Chart -->
+                        <div class="card">
+                            <div class="card__header">
+                                <h3>Model Accuracy Comparison</h3>
+                            </div>
+                            <div class="card__body">
+                                <div class="chart-container" style="position: relative; height: 300px;">
+                                    <canvas id="modelChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Performance Metrics Table -->
+                        <div class="card">
+                            <div class="card__header">
+                                <h3>Detailed Metrics</h3>
+                            </div>
+                            <div class="card__body">
+                                <div class="performance-table">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Model</th>
+                                                <th>Accuracy</th>
+                                                <th>Precision</th>
+                                                <th>Recall</th>
+                                                <th>F1-Score</th>
+                                                <th>Speed</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="performanceTableBody">
+                                            <!-- Performance data will be populated here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Current Model Details -->
+                        <div class="card full-width">
+                            <div class="card__header">
+                                <h3>Current Active Model: BERT</h3>
+                            </div>
+                            <div class="card__body">
+                                <div class="model-details">
+                                    <div class="detail-item">
+                                        <span class="detail-label">Model Type:</span>
+                                        <span class="detail-value">Bidirectional Encoder Representations from Transformers</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Training Data:</span>
+                                        <span class="detail-value">500,000 labeled news articles</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Last Updated:</span>
+                                        <span class="detail-value">August 20, 2025</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Confidence Threshold:</span>
+                                        <span class="detail-value">0.85</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <p>&copy; 2025 Fake News Detection System. Built for Academic Research & Lab Demonstration.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
